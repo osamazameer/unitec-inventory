@@ -36,10 +36,15 @@ app.get("/database", (req, res) => {
   res.sendFile(path.join(__dirname + "/public/views/database.html"));
 });
 
-// let url =
-//   "mongodb+srv://testapp:shujja@cluster0.lzutz.mongodb.net/Product?retryWrites=true&w=majority";
+let url =
+  "mongodb+srv://ocama:zamir@cluster0.k2vij.mongodb.net/unitec?retryWrites=true&w=majority";
 
-let url = "mongodb://localhost/os_inventory";
+
+
+
+
+
+//let url = "mongodb://localhost/os_inventory";
 
 mongoose.connect(url, {
   useNewUrlParser: true,
