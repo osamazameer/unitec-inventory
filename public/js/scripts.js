@@ -22,7 +22,9 @@ let fetchingDate;
 
 // POST data of Product & Customer
 async function submitData() {
+  console.log("HEY");
   name = document.getElementById("productName").value;
+
   // prodID = document.getElementById("productId").value;
   qty = document.getElementById("qty").value;
   unit = document.getElementById("unit").value;
@@ -102,33 +104,105 @@ async function GETPARTYINFO() {
   productsRow.innerHTML = options;
 }
 
-// To Render Products on Table
+
+//Removes ReadOnly from input fields in DATABASE TABLE
+function letChange() {
+  console.log("Hello  ")
+  //element.buttonClicked("editButton", function () { alert("Hello World!"); });
+  // console.log("HELLO")
+  // await document.getElementById(`remove${nth}`).removeAttribute('readonly');
+
+
+}
+
+function myClick(id) {
+  console.log("working")
+  document.getElementById(id).addEventListener('click', async () => {
+
+    name = document.getElementById("productName" + id).value;
+    // prodID = document.getElementById("productId").value;
+    qty = document.getElementById("qty" + id).value;
+    unit = document.getElementById("unit" + id).value;
+    unitPrice = document.getElementById("unitPrice" + id).value;
+    // purchasedPrice = document.getElementById("purchasedPrice").value;
+    partyName = document.getElementById("partyName" + id).value;
+    personToContact = document.getElementById("personToContact" + id).value;
+    address = document.getElementById("address" + id).value;
+    telephone = document.getElementById("telephone" + id).value;
+    mobile = document.getElementById("mobile" + id).value;
+    email = document.getElementById("email" + id).value;
+    website = document.getElementById("website" + id).value;
+    refNo = document.getElementById("refNo" + id).value;
+    ref = document.getElementById("ref" + id).value;
+
+    data = {
+      name: name,
+      qty: qty,
+      unit: unit,
+      unitPrice: unitPrice,
+      partyName: partyName,
+      personToContact: personToContact,
+      address: address,
+      telephone: telephone,
+      mobile: mobile,
+      email: email,
+      website: website,
+      // nameAddress: nameAddress,
+      refNo: refNo,
+      ref: ref,
+    };
+    console.log(data);
+    await fetch(`http://localhost:8000/inventory/${id}`, {
+      method: "POST", // or 'PUT'
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        console.log("Success:", data);
+      })
+      .catch((error) => {
+        console.error("Error:", error);
+      });
+
+  })
+}
+
+// To Render Products on DATABASE TABLE
 async function renderProducts() {
   let a = await API();
 
   let html = "";
   a.forEach((product, i) => {
+    console.log(product._id);
+    let myId = product._id
     let htmlSegment = `
             <tr class="singleRow">
               <th scope="row">${i + 1}</th>
-              <td>${product.refNo}</td>
-              <td>${product.ref}</td>
-              <td>${product.name}</td>
-              <td>${product.qty}</td>
-              <td>${product.unit}</td>
-              <td>${product.unitPrice}</td>
-              <td>${product.personToContact}</td>
-              <td>${product.partyName}</td>
-              <td>${product.mobile}</td>
-              <td>${product.telephone}</td>
-              <td>${product.email}</td>
-              <td>${product.website}</td>
-              <td>${product.address}</td>
-                         </tr>
+              <td><input style="border: 0px;" type="text" id="refNo${myId}" value="${product.refNo}"/></td>
+              <td><input style="border: 0px;" type="text" id="ref${myId}" value="${product.ref}"/></td>
+              <td><input style="border: 0px;" type="text" id="productName${myId}" value="${product.name}"/></td>
+              <td><input style="border: 0px;" type="text" id="qty${myId}" value="${product.qty}"/></td>
+              <td><input style="border: 0px;" type="text" id="unit${myId}" value="${product.unit}"/></td>
+              <td><input style="border: 0px;" type="text" id="unitPrice${myId}" value="${product.unitPrice}"/></td>
+              <td><input style="border: 0px;" type="text" id="personToContact${myId}" value="${product.personToContact}"/></td>
+              <td><input style="border: 0px;" type="text" id="partyName${myId}" value="${product.partyName}"/></td>
+              <td><input style="border: 0px;" type="text" id="mobile${myId}" value="${product.mobile}"/></td>
+              <td><input style="border: 0px;" type="text" id="telephone${myId}" value="${product.telephone}"/></td>
+              <td><input style="border: 0px;" type="text" id="email${myId}" value="${product.email}"/></td>
+              <td><input style="border: 0px;" type="text" id="website${myId}" value="${product.website}"/></td>
+              <td><input style="border: 0px;" type="text" id="address${myId}" value="${product.address}"/></td>
+              <td><button class="editButton btn btn-primary" id="${product._id}" onclick=myClick("${myId}")>Edit</button></td>
+              </tr>
             `;
 
     html += htmlSegment;
   });
+
+
+
 
   let productsRow = document.querySelector(".products-row");
   productsRow.innerHTML = html;
@@ -145,6 +219,8 @@ async function renderProducts() {
     });
   }
 }
+
+
 
 async function fetchDate() {
   ref = document.getElementById("ref").value;

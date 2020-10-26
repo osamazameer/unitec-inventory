@@ -1,10 +1,11 @@
 const express = require("express");
+const { findById } = require("../models/inventory/product");
 const Product = require("../models/inventory/product");
 
 const router = express.Router();
 
 router.get("/", async (req, res) => {
-  const products = await Product.find({}).select("-__v -_id");
+  const products = await Product.find({}).select("-__v");
 
   try {
     if (products == null || products == "") {
@@ -72,6 +73,63 @@ router.post("/", async (req, res) => {
     });
   }
 });
+
+router.post("/:id", async (req, res) => {
+
+  const {
+    //id,
+    // productId,
+    name,
+    qty,
+    unit,
+    unitPrice,
+    //purchasedPrice,
+    partyName,
+    personToContact,
+    address,
+    telephone,
+    mobile,
+    email,
+    website,
+    refNo,
+    ref,
+    // nameAddress,
+  } = req.body;
+
+  try {
+    let oldproduct = await Product.find({ _id: req.params.id });
+    console.log(oldproduct);
+
+    oldproduct.name = name
+    oldproduct.qty = qty
+    oldproduct.unit = unit
+    oldproduct.unitPrice = unitPrice
+    oldproduct.partyName = partyName
+    oldproduct.personToContact = personToContact
+    oldproduct.address = address
+    oldproduct.telephone = telephone
+    oldproduct.mobile = mobile
+    oldproduct.email = email
+    oldproduct.website = website
+    oldproduct.refNo = refNo
+    oldproduct.ref = ref
+
+    console.log(oldproduct);
+
+    await oldproduct.save();
+
+    res.send({
+      data: oldproduct,
+      message: "Your data has been successfully saved on database! :)",
+    });
+  } catch (e) {
+    res.status(500).send({
+      error: e,
+      message: "Error Occured on server!",
+    });
+  }
+});
+
 
 router.post("/find", async (req, res) => {
   //res.send("HEY");
