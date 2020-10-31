@@ -62,16 +62,16 @@ body {
 .show {
   display: block !important;
 }
-.form-button{
+.form-button {
   background-color: rgb(216, 216, 216);
-  padding:10px;
+  padding: 10px;
   margin-top: 10px;
 }
 .button {
   border-radius: 4px;
-  background-color:maroon;
+  background-color: maroon;
   border: none;
-  color: #FFFFFF;
+  color: #ffffff;
   text-align: center;
   font-size: 22px;
   padding: 15px;
@@ -89,7 +89,7 @@ body {
 }
 
 .button span:after {
-  content: '\00bb';
+  content: "\00bb";
   position: absolute;
   opacity: 0;
   top: 0;
@@ -104,4 +104,13 @@ body {
 .button:hover span:after {
   opacity: 1;
   right: 0;
+}
+
+.my-btn-link {
+  text-decoration: none;
+  color: white;
+}
+.my-btn-link:hover {
+  text-decoration: none;
+  color: white;
 }

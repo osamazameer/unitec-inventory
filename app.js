@@ -16,6 +16,11 @@ app.use("/inventory", inventoryRouter);
 app.use("/slip", generalInfo);
 // app.use("view-engine", "html");
 
+
+app.get('/edit/:id', (req, res) =>{
+  res.sendFile(path.join(__dirname + "/public/views/editPage.html"))
+})
+
 app.get("/", (req, res) => {
   // res.sendFile(path.join(__dirname + "addProducts.html"));
   res.sendFile(path.join(__dirname + "/public/views/addProducts.html"));
@@ -36,15 +41,15 @@ app.get("/database", (req, res) => {
   res.sendFile(path.join(__dirname + "/public/views/database.html"));
 });
 
-let url =
-  "mongodb+srv://ocama:zamir@cluster0.k2vij.mongodb.net/unitec?retryWrites=true&w=majority";
+// let url =
+//   "mongodb+srv://ocama:zamir@cluster0.k2vij.mongodb.net/unitec?retryWrites=true&w=majority";
 
 
 
 
 
 
-//let url = "mongodb://localhost/os_inventory";
+let url = "mongodb://localhost/os_inventory";
 
 mongoose.connect(url, {
   useNewUrlParser: true,

@@ -72,79 +72,7 @@
           </div>
         </div>
       </div>
-      <div class="card">
-        <div class="card-header" style="cursor:pointer" id="headingOne" data-toggle="collapse"
-          data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-          <h5 class="m-auto d-block text-center">
-            Data Information
-          </h5>
-        </div>
-
-        <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordion">
-          <div class="card-body">
-            <form action="">
-              <form>
-                <fieldset>
-                  <!-- Text input-->
-                  <div class="form-group row">
-                    <label class="col-md-3 control-label" for="name">Item Description</label>
-                    <div class="col-md-9">
-                      <input id="productName" name="name" type="text" placeholder="Enter product name "
-                        class="form-control input-md" required="true" />
-                    </div>
-                  </div>
-
-                  <!-- Text input-->
-                  <div class="form-group row">
-                    <label class="col-md-3 control-label" for="qty">Quantity</label>
-                    <div class="col-md-9">
-                      <input id="qty" name="qty" type="text" placeholder="Enter Quantity" class="form-control input-md"
-                        required="true" />
-                    </div>
-                  </div>
-
-                  <!-- Select Basic -->
-                  <div class="form-group row">
-                    <label class="col-md-3 control-label" for="unit">Unit</label>
-                    <div class="col-md-9">
-                      <select id="unit" name="unit" class="form-control">
-                        <option value="KG">KG</option>
-                        <option value="Packets">Packets</option>
-                        <option value="No.">No.</option>
-                        <option value="U">U</option>
-                        <option value="RFT">RFT</option>
-                        <option value="Sqft">Sqft</option>
-                        <option value="Length">Length</option>
-                      </select>
-                    </div>
-                  </div>
-
-                  <!-- Text input-->
-                  <div class="form-group row">
-                    <label class="col-md-3 control-label" for="unitPrice">Unit Price</label>
-                    <div class="col-md-9">
-                      <input id="unitPrice" name="unitPrice" type="text" placeholder="Enter unit price"
-                        class="form-control input-md" required="true" />
-                    </div>
-                  </div>
-
-
-
-
-              </form>
-
-          </div>
-
-          <div class="text-right align-items-right mb-4 mr-4">
-            <!-- <button id="submit" name="submit" class="btn btn-primary" style="width: 48%;background-color:rgb(57, 5, 179) !important;)
-               !important;" onclick=""><span>Update</span></button> -->
-            <button id="submit" name="submit" class="btn btn-primary"
-              style="width: 20%;background-color:rgb(0, 92, 128) !important;"
-              onclick="submitData()"><span>Save</span></button>
-          </div>
-
-        </div>
-      </div>
+      
       <div class="card">
         <div class="card-header" style="cursor:pointer" id="headingTwo" data-toggle="collapse"
           data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
@@ -224,15 +152,86 @@
           </div>
         </div>
       </div>
+      <div class="card">
+        <div class="card-header" style="cursor:pointer" id="headingOne" data-toggle="collapse"
+          data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+          <h5 class="m-auto d-block text-center">
+            Data Information
+          </h5>
+        </div>
 
-      <div class="text-center mt-4">
+        <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordion">
+          <div class="card-body">
+            <form action="">
+              <form>
+                <fieldset>
+                  <!-- Text input-->
+                  <div class="form-group row">
+                    <label class="col-md-3 control-label" for="name">Item Description</label>
+                    <div class="col-md-9">
+                      <input id="productName" name="name" type="text" placeholder="Enter product name "
+                        class="form-control input-md" required="true" />
+                    </div>
+                  </div>
+
+                  <!-- Text input-->
+                  <div class="form-group row">
+                    <label class="col-md-3 control-label" for="qty">Quantity</label>
+                    <div class="col-md-9">
+                      <input id="qty" name="qty" type="text" placeholder="Enter Quantity" class="form-control input-md"
+                        required="true" />
+                    </div>
+                  </div>
+
+                  <!-- Select Basic -->
+                  <div class="form-group row">
+                    <label class="col-md-3 control-label" for="unit">Unit</label>
+                    <div class="col-md-9">
+                      <select id="unit" name="unit" class="form-control">
+                        <option value="KG">KG</option>
+                        <option value="Packets">Packets</option>
+                        <option value="No.">No.</option>
+                        <option value="U">U</option>
+                        <option value="RFT">RFT</option>
+                        <option value="Sqft">Sqft</option>
+                        <option value="Length">Length</option>
+                      </select>
+                    </div>
+                  </div>
+
+                  <!-- Text input-->
+                  <div class="form-group row">
+                    <label class="col-md-3 control-label" for="unitPrice">Unit Price</label>
+                    <div class="col-md-9">
+                      <input id="unitPrice" name="unitPrice" type="text" placeholder="Enter unit price"
+                        class="form-control input-md" required="true" />
+                    </div>
+                  </div>
+
+
+
+
+              </form>
+
+          </div>
+
+          <div class="text-right align-items-right mb-4 mr-4">
+            <!-- <button id="submit" name="submit" class="btn btn-primary" style="width: 48%;background-color:rgb(57, 5, 179) !important;)
+               !important;" onclick=""><span>Update</span></button> -->
+               <button id="submit" name="submit" class="button m-auto d-block w-50" onclick="submitData()"><span>Save
+                Data</span></button>
+          </div> 
+
+        </div>
+      </div>
+      <!-- <div class="text-center mt-4">
         <p class="lead">Please <b style="color: red;">Save Data</b> before <b style="color: red;">Generating
             Quotation</b>
-        </p>
+        </p> -->
       </div>
       <div class="btn-group text-center d-block m-auto" style="align-items: center;">
-        <button id="submit" name="submit" class="button m-auto d-block w-50" onclick="submitData()"><span>Save
-            Data</span></button>
+        <!-- <button id="submit" name="submit" class="button m-auto d-block w-50" onclick="submitData()"><span>Save
+            Data</span></button> -->
         <!-- <div class="text-center mt-4">
           <p class="lead">Please <b style="color: red;">Select Date</b> Of The Data You Want To <b
               style="color: red;">Generate</b></p>

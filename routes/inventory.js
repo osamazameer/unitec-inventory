@@ -1,6 +1,7 @@
 const express = require("express");
 const { findById } = require("../models/inventory/product");
 const Product = require("../models/inventory/product");
+const { route } = require("./generalInfo");
 
 const router = express.Router();
 
@@ -74,6 +75,30 @@ router.post("/", async (req, res) => {
   }
 });
 
+
+
+router.post("/findRef", async (req, res) => {
+  //res.send("HEY");
+  try {
+    
+    
+
+    const data = await Product.find({
+      refNo: req.body.refNo
+    })
+
+    res.send(data)
+
+    // res.render("/views/slip", {
+    //   data: data,
+    // });
+  } catch (error) {
+
+    console.log(error);
+    res.send(error);
+  }
+});
+
 router.post("/:id", async (req, res) => {
 
   const {
@@ -96,10 +121,10 @@ router.post("/:id", async (req, res) => {
     // nameAddress,
   } = req.body;
   console.log(req.body)
-  try {
-    let oldproduct = await Product.find({ _id: req.params.id });
-    console.log(oldproduct);
-
+  try { 
+    const oldproduct = await Product.findOne({ _id: req.params.id });
+    console.log("----- OLD PRODUCT -----")
+    
     oldproduct.name = name
     oldproduct.qty = qty
     oldproduct.unit = unit
@@ -114,7 +139,6 @@ router.post("/:id", async (req, res) => {
     oldproduct.refNo = refNo
     oldproduct.ref = ref
 
-    console.log(oldproduct);
 
     await oldproduct.save();
 
@@ -123,6 +147,7 @@ router.post("/:id", async (req, res) => {
       message: "Your data has been successfully saved on database! :)",
     });
   } catch (e) {
+    console.log(e)
     res.status(500).send({
       error: e,
       message: "Error Occured on server!",
@@ -131,22 +156,7 @@ router.post("/:id", async (req, res) => {
 });
 
 
-router.post("/find", async (req, res) => {
-  //res.send("HEY");
-  try {
-    let { ReferenceNo } = req.body;
-    const data = await Product.find({ refNo: ReferenceNo });
 
-    res.send(data);
-
-    // res.render("/views/slip", {
-    //   data: data,
-    // });
-  } catch (error) {
-    console.log(error);
-    res.send(error);
-  }
-});
 
 router.post("/getParty", async (req, res) => {
   //res.send("HEY");
@@ -178,6 +188,18 @@ router.post("/getParty", async (req, res) => {
   //     res.status(500).send(e);
   //   }
 });
+
+router.get("/:id", async (req, res) => {
+  try {
+    const data = await Product.findOne({
+      _id:req.params.id
+    })
+
+    res.send(data)
+  } catch (error) {
+    res.status(500).send(error)
+  }
+})
 
 router.delete("/:productId", async (req, res) => {
   const product = await Product.findOne({ productId: req.params.productId });

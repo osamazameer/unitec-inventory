@@ -24,12 +24,9 @@ let fetchingDate;
 async function submitData() {
   console.log("HEY");
   name = document.getElementById("productName").value;
-
-  // prodID = document.getElementById("productId").value;
   qty = document.getElementById("qty").value;
   unit = document.getElementById("unit").value;
   unitPrice = document.getElementById("unitPrice").value;
-  // purchasedPrice = document.getElementById("purchasedPrice").value;
   partyName = document.getElementById("partyName").value;
   personToContact = document.getElementById("personToContact").value;
   address = document.getElementById("address").value;
@@ -39,7 +36,6 @@ async function submitData() {
   website = document.getElementById("website").value;
   refNo = document.getElementById("refNo").value;
   ref = document.getElementById("ref").value;
-
   data = {
     name: name,
     qty: qty,
@@ -52,11 +48,9 @@ async function submitData() {
     mobile: mobile,
     email: email,
     website: website,
-    // nameAddress: nameAddress,
     refNo: refNo,
     ref: ref,
   };
-  //console.log(data);
   await fetch("http://localhost:8000/inventory", {
     method: "POST", // or 'PUT'
     headers: {
@@ -69,11 +63,12 @@ async function submitData() {
       console.log("Success:", data);
     })
     .catch((error) => {
+      alert("Error Occured")
       console.error("Error:", error);
     });
   await ClearFields();
 
-  //await renderProducts();
+ 
 
 }
 
@@ -105,68 +100,14 @@ async function GETPARTYINFO() {
 }
 
 
-//Removes ReadOnly from input fields in DATABASE TABLE
-function letChange() {
-  console.log("Hello  ")
-  //element.buttonClicked("editButton", function () { alert("Hello World!"); });
-  // console.log("HELLO")
-  // await document.getElementById(`remove${nth}`).removeAttribute('readonly');
-
-
-}
 
 async function myClick(id) {
-  document.getElementById(id).addEventListener('click', async () => {
+  sessionStorage.setItem("edit_id", id)
+  console.log(id)
 
-    name = document.getElementById("productName" + id).value;
-    // prodID = document.getElementById("productId").value;
-    qty = document.getElementById("qty" + id).value;
-    unit = document.getElementById("unit" + id).value;
-    unitPrice = document.getElementById("unitPrice" + id).value;
-    // purchasedPrice = document.getElementById("purchasedPrice").value;
-    partyName = document.getElementById("partyName" + id).value;
-    personToContact = document.getElementById("personToContact" + id).value;
-    address = document.getElementById("address" + id).value;
-    telephone = document.getElementById("telephone" + id).value;
-    mobile = document.getElementById("mobile" + id).value;
-    email = document.getElementById("email" + id).value;
-    website = document.getElementById("website" + id).value;
-    refNo = document.getElementById("refNo" + id).value;
-    ref = document.getElementById("ref" + id).value;
-
-    data = {
-      name: name,
-      qty: qty,
-      unit: unit,
-      unitPrice: unitPrice,
-      partyName: partyName,
-      personToContact: personToContact,
-      address: address,
-      telephone: telephone,
-      mobile: mobile,
-      email: email,
-      website: website,
-      // nameAddress: nameAddress,
-      refNo: refNo,
-      ref: ref,
-    };
-    console.log(data);
-    await fetch(`http://localhost:8000/inventory/${id}`, {
-      method: "POST", // or 'PUT'
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(data),
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        console.log("Success:", data);
-      })
-      .catch((error) => {
-        console.error("Error:", error);
-      });
-
-  })
+    
+    
+    
 }
 
 // To Render Products on DATABASE TABLE
@@ -175,28 +116,8 @@ async function renderProducts() {
 
   let html = "";
   a.forEach((product, i) => {
-    console.log(product._id);
+   
     let myId = product._id
-    let htmlSegment = `
-            <tr class="singleRow">
-              <th scope="row">${i + 1}</th>
-              <th><input style="border: 0px;" type="text" id="refNo${myId}" value="${product.refNo}"/></th>
-              <th><input style="border: 0px;" type="text" id="ref${myId}" value="${product.ref}"/></th>
-              <td><input style="border: 0px;" type="text" id="productName${myId}" value="${product.name}"/></td>
-              <td><input style="border: 0px;" type="text" id="qty${myId}" value="${product.qty}"/></td>
-              <td><input style="border: 0px;" type="text" id="unit${myId}" value="${product.unit}"/></td>
-              <td><input style="border: 0px;" type="text" id="unitPrice${myId}" value="${product.unitPrice}"/></td>
-              <td><input style="border: 0px;" type="text" id="personToContact${myId}" value="${product.personToContact}"/></td>
-              <td><input style="border: 0px;" type="text" id="partyName${myId}" value="${product.partyName}"/></td>
-              <td><input style="border: 0px;" type="text" id="mobile${myId}" value="${product.mobile}"/></td>
-              <td><input style="border: 0px;" type="text" id="telephone${myId}" value="${product.telephone}"/></td>
-              <td><input style="border: 0px;" type="text" id="email${myId}" value="${product.email}"/></td>
-              <td><input style="border: 0px;" type="text" id="website${myId}" value="${product.website}"/></td>
-              <td><input style="border: 0px;" type="text" id="address${myId}" value="${product.address}"/></td>
-              <td><button class="editButton btn btn-primary" id="${product._id}" onclick=myClick("${myId}")>Edit</button></td>
-              </tr>
-            `;
-
     const table = `
     <tr class="singleRow">
     <th scope="row">${i + 1}</th>
@@ -213,10 +134,10 @@ async function renderProducts() {
     <td>${product.email}</td>
     <td>${product.website}</td>
     <td>${product.address}</td>
-    <td><button class="editButton btn btn-primary" id="${myId}" onClick=myClick("${myId}")>Edit</button></td>
+    <td><button class="editButton btn btn-primary" id="${myId}"><a href="/edit/${myId}" onclick=myClick("${myId}") class="my-btn-link">Edit</a></button></td>
     </tr>
     `
-
+    // onClick=myClick("${myId}")
     html += table;
   });
 
@@ -245,22 +166,19 @@ async function fetchDate() {
   ref = document.getElementById("ref").value;
   refNo = document.getElementById("refNo").value;
   nameAddress = document.getElementById("nameAddress").value;
-
   let GenInfo = {
     nameAddress: nameAddress,
     ref: ref,
     refNo: refNo,
   };
-
   fetchingRefNo = document.getElementById("refNo").value;
   if (fetchingRefNo == "" || fetchingRefNo == null) {
-    return alert("Please enter a valid date");
+    return alert("Please enter a valid Reference No. ");
   }
   let myData = {
-    ReferenceNo: fetchingRefNo,
+    refNo: fetchingRefNo,
   };
-
-  await fetch("http://localhost:8000/inventory/find", {
+  await fetch("http://localhost:8000/inventory/findRef", {
     method: "POST", // or 'PUT'
     headers: {
       "Content-Type": "application/json",
@@ -269,31 +187,25 @@ async function fetchDate() {
   })
     .then((response) => response.json())
     .then((data) => {
+      console.log(data)
       sessionStorage.setItem("slip", JSON.stringify(data));
     })
     .catch((error) => {
       console.error("Error:", error);
     });
-
   sessionStorage.setItem("GetInfo", JSON.stringify(GenInfo));
-
   window.location.href = "/the-slip";
 }
 
 async function renderSlip() {
   let GetFinalInfo = JSON.parse(sessionStorage.getItem("GetInfo"));
-
   let GetRefNoID = document.getElementById("refNoID");
   GetRefNoID.innerHTML = `<p>${GetFinalInfo.refNo}</p>`;
-
   let GetRefID = document.getElementById("refID");
   GetRefID.innerHTML = `<p>Ref: ${GetFinalInfo.ref}</p>`;
-
   let GetAddressNameID = document.getElementById("addressNameID");
   GetAddressNameID.innerHTML = `<p>${GetFinalInfo.nameAddress}</p>`;
-
   let items = JSON.parse(sessionStorage.getItem("slip"));
-  //console.log(items);
   let html = "";
   items.forEach((item, index) => {
     let htmlSegment = `
@@ -314,7 +226,6 @@ async function renderSlip() {
   let productsRow = document.querySelector(".slip-products-row");
   productsRow.innerHTML = html;
   deleteItems();
-
 }
 
 async function ClearFields() {
@@ -359,14 +270,94 @@ async function callBuyerInfo() {
     });
 }
 
-// function searchTable() {
-//   document.getElementById("search-input").addEventListener("keyup", () => {
-//     let value = this.value;
-//     console.log(value);
-//   });
+async function editRender() {
+  
+  
+  const id = await sessionStorage.getItem("edit_id")
+  console.log(id)
+  const editData = await fetch(`http://localhost:8000/inventory/${id}`)
+    .then((response) => response.json())
+    .then((json) => {
+      return (data = json);
+    });
+  console.log(editData)
 
-// }
+  document.getElementById('refNo').value = editData.refNo
+  document.getElementById('address').value = editData.address
+  document.getElementById('ref').value = editData.ref
+  document.getElementById('address').value = editData.address
+  document.getElementById('productName').value = editData.productName
+  document.getElementById('qty').value = editData.qty
+  document.getElementById('unit').value = editData.unit
+  document.getElementById('unitPrice').value = editData.unitPrice
+  document.getElementById('partyName').value = editData.partyName
+  document.getElementById('personToContact').value = editData.personToContact
+  document.getElementById('personToContact').value = editData.personToContact
+  document.getElementById('telephone').value = editData.telephone
+  document.getElementById('mobile').value = editData.mobile
+  document.getElementById('email').value = editData.email
+  document.getElementById('website').value = editData.website
 
-// $(document).ready(function () {
-//   $("#database-table").DataTable();
-// });
+  }
+
+
+  async function submitEditData() {
+    const id = await sessionStorage.getItem("edit_id")
+    console.log("HEY");
+    name = document.getElementById("productName").value;
+  
+   
+    qty = document.getElementById("qty").value;
+    unit = document.getElementById("unit").value;
+    unitPrice = document.getElementById("unitPrice").value;
+  
+    partyName = document.getElementById("partyName").value;
+    personToContact = document.getElementById("personToContact").value;
+    address = document.getElementById("address").value;
+    telephone = document.getElementById("telephone").value;
+    mobile = document.getElementById("mobile").value;
+    email = document.getElementById("email").value;
+    website = document.getElementById("website").value;
+    refNo = document.getElementById("refNo").value;
+    ref = document.getElementById("ref").value;
+  
+    data = {
+      name: name,
+      qty: qty,
+      unit: unit,
+      unitPrice: unitPrice,
+      partyName: partyName,
+      personToContact: personToContact,
+      address: address,
+      telephone: telephone,
+      mobile: mobile,
+      email: email,
+      website: website,
+      refNo: refNo,
+      ref: ref,
+    };
+    await fetch(`http://localhost:8000/inventory/${id}`, {
+      method: "POST", // or 'PUT'
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    })
+      .then((response) => {
+        alert("Data has been successfully Edited!")
+        return response.json()})
+      .then((data) => {
+        
+        window.location.replace("http://localhost:8000/database");
+
+        console.log("Success:", data);
+      })
+      
+      .catch((error) => {
+        console.error("Error:", error);
+      });
+    
+  
+   
+  
+  }
