@@ -95,7 +95,7 @@ router.post("/:id", async (req, res) => {
     ref,
     // nameAddress,
   } = req.body;
-
+  console.log(req.body)
   try {
     let oldproduct = await Product.find({ _id: req.params.id });
     console.log(oldproduct);

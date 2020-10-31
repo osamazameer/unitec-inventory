@@ -115,8 +115,7 @@ function letChange() {
 
 }
 
-function myClick(id) {
-  console.log("working")
+async function myClick(id) {
   document.getElementById(id).addEventListener('click', async () => {
 
     name = document.getElementById("productName" + id).value;
@@ -181,8 +180,8 @@ async function renderProducts() {
     let htmlSegment = `
             <tr class="singleRow">
               <th scope="row">${i + 1}</th>
-              <td><input style="border: 0px;" type="text" id="refNo${myId}" value="${product.refNo}"/></td>
-              <td><input style="border: 0px;" type="text" id="ref${myId}" value="${product.ref}"/></td>
+              <th><input style="border: 0px;" type="text" id="refNo${myId}" value="${product.refNo}"/></th>
+              <th><input style="border: 0px;" type="text" id="ref${myId}" value="${product.ref}"/></th>
               <td><input style="border: 0px;" type="text" id="productName${myId}" value="${product.name}"/></td>
               <td><input style="border: 0px;" type="text" id="qty${myId}" value="${product.qty}"/></td>
               <td><input style="border: 0px;" type="text" id="unit${myId}" value="${product.unit}"/></td>
@@ -198,7 +197,27 @@ async function renderProducts() {
               </tr>
             `;
 
-    html += htmlSegment;
+    const table = `
+    <tr class="singleRow">
+    <th scope="row">${i + 1}</th>
+    <td>${product.refNo}</td>
+    <td>${product.ref}</td>
+    <td>${product.name}</td>
+    <td>${product.qty}</td>
+    <td>${product.unit}</td>
+    <td>${product.unitPrice}</td>
+    <td>${product.personToContact}</td>
+    <td>${product.partyName}</td>
+    <td>${product.mobile}</td>
+    <td>${product.telephone}</td>
+    <td>${product.email}</td>
+    <td>${product.website}</td>
+    <td>${product.address}</td>
+    <td><button class="editButton btn btn-primary" id="${myId}" onClick=myClick("${myId}")>Edit</button></td>
+    </tr>
+    `
+
+    html += table;
   });
 
 
